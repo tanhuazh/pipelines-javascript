@@ -1,0 +1,240 @@
+variables:
+  bdoessportalsetup: 'bdoesshostsetup'
+
+steps:
+- task: Docker@2
+  displayName: buildAndPush
+  inputs:
+    containerRegistry: 'ESS Docker Registry'
+    repository: '$(bdoessportalsetup)'
+    Dockerfile: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/src/Bdo.Ess.Portal.Setup/Dockerfile'
+    buildContext: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/'
+    tags: |
+     $(Release.ReleaseName)
+     latest
+	 
+variables:
+  bdoesswebhost: 'bdoesswebhost'
+
+steps:
+- task: Docker@2
+  displayName: buildAndPush
+  inputs:
+    containerRegistry: 'ESS Docker Registry'
+    repository: '$(bdoesswebhost)'
+    Dockerfile: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/src/Bdo.Ess.Web.Host/Dockerfile'
+    buildContext: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/'
+    tags: |
+     v2$(Release.ReleaseName)
+     latest
+	 
+variables:
+  bdoesslookupweb: 'bdoesslookupservices'
+
+steps:
+- task: Docker@2
+  displayName: buildAndPush
+  inputs:
+    containerRegistry: 'ESS Docker Registry'
+    repository: '$(bdoesslookupweb)'
+    Dockerfile: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/src/Bdo.Ess.Microservice.Lookup.Web/Dockerfile'
+    buildContext: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/'
+    tags: |
+     $(Release.ReleaseName)
+     latest
+	 
+variables:
+  bdoessmicroservicessetup: 'bdoessctspsetup'
+
+steps:
+- task: Docker@2
+  displayName: buildAndPush
+  inputs:
+    containerRegistry: 'ESS Docker Registry'
+    repository: '$(bdoessmicroservicessetup)'
+    Dockerfile: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/src/Bdo.Ess.Microservice.Setup/Dockerfile'
+    buildContext: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/'
+    tags: |
+     $(Release.ReleaseName)
+     latest
+	 
+variables:
+  bdoessadminweb: 'bdoessadministrationservices'
+
+steps:
+- task: Docker@2
+  displayName: buildAndPush
+  inputs:
+    containerRegistry: 'ESS Docker Registry'
+    repository: '$(bdoessadminweb)'
+    Dockerfile: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/src/Bdo.Ess.Microservice.Administration.Web/Dockerfile'
+    buildContext: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/'
+    tags: |
+     $(Release.ReleaseName)
+     latest
+	 
+variables:
+  bdoessaduitweb: 'bdoessauditservices'
+
+steps:
+- task: Docker@2
+  displayName: buildAndPush
+  inputs:
+    containerRegistry: 'ESS Docker Registry'
+    repository: '$(bdoessaduitweb)'
+    Dockerfile: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/src/Bdo.Ess.Microservice.Audit.Web/Dockerfile'
+    buildContext: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/'
+    tags: |
+     $(Release.ReleaseName)
+     latest
+	 
+variables:
+  bdoesscorporateentityweb: 'bdoesscorporateentityservices'
+
+steps:
+- task: Docker@2
+  displayName: buildAndPush
+  inputs:
+    containerRegistry: 'ESS Docker Registry'
+    repository: '$(bdoesscorporateentityweb)'
+    Dockerfile: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/src/Bdo.Ess.Microservice.CorporateEntity.Web/Dockerfile'
+    buildContext: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/'
+    tags: |
+     $(Release.ReleaseName)
+     latest
+	 
+variables:
+  bdoesseconomicsubstanceweb: 'bdoesseconomicsubstanceservices'
+
+steps:
+- task: Docker@2
+  displayName: buildAndPush
+  inputs:
+    containerRegistry: 'ESS Docker Registry'
+    repository: '$(bdoesseconomicsubstanceweb)'
+    Dockerfile: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/src/Bdo.Ess.Microservice.EconomicSubstance.Web/Dockerfile'
+    buildContext: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/'
+    tags: |
+     $(Release.ReleaseName)
+     latest
+	 
+variables:
+  bdoessworkflowweb: 'bdoessworkflowservices'
+
+steps:
+- task: Docker@2
+  displayName: buildAndPush
+  inputs:
+    containerRegistry: 'ESS Docker Registry'
+    repository: '$(bdoessworkflowweb)'
+    Dockerfile: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/src/Bdo.Ess.Microservice.Workflow.Web/Dockerfile'
+    buildContext: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/'
+    tags: |
+     $(Release.ReleaseName)
+     latest
+	 
+variables:
+  bdoessdashboardjob: 'bdoessdashboardjob'
+
+steps:
+- task: Docker@2
+  displayName: buildAndPush
+  inputs:
+    containerRegistry: 'ESS Docker Registry'
+    repository: '$(bdoessdashboardjob)'
+    Dockerfile: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/src/Bdo.Ess.DashboardJob/Dockerfile'
+    buildContext: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/'
+    tags: |
+     $(Release.ReleaseName)
+     latest
+	 
+variables:
+  bdoessredflagjob: 'bdoessredflagjob'
+
+steps:
+- task: Docker@2
+  displayName: buildAndPush
+  inputs:
+    containerRegistry: 'ESS Docker Registry'
+    repository: '$(bdoessredflagjob)'
+    Dockerfile: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/src/Bdo.Ess.Job.RedFlags/Dockerfile'
+    buildContext: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/'
+    tags: |
+     $(Release.ReleaseName)
+     latest
+	 
+variables:
+  bdoessredflagweb: 'bdoessredflagservices'
+
+steps:
+- task: Docker@2
+  displayName: buildAndPush
+  inputs:
+    containerRegistry: 'ESS Docker Registry'
+    repository: '$(bdoessredflagweb)'
+    Dockerfile: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/src/Bdo.Ess.Microservice.RedFlags.Web/Dockerfile'
+    buildContext: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/'
+    tags: |
+     $(Release.ReleaseName)
+     latest
+	 
+variables:
+  bdoessreportingweb: 'bdoessreportingservices'
+
+steps:
+- task: Docker@2
+  displayName: buildAndPush
+  inputs:
+    containerRegistry: 'ESS Docker Registry'
+    repository: '$(bdoessreportingweb)'
+    Dockerfile: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/src/Bdo.Ess.Microservice.Reporting.Web/Dockerfile'
+    buildContext: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/'
+    tags: |
+     $(Release.ReleaseName)
+     latest
+	 
+variables:
+  bdoessautopassjob: 'bdoessautopassjob'
+
+steps:
+- task: Docker@2
+  displayName: buildAndPush
+  inputs:
+    containerRegistry: 'ESS Docker Registry'
+    repository: '$(bdoessautopassjob)'
+    Dockerfile: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/src/Bdo.Ess.AutoESAssessment/Dockerfile'
+    buildContext: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/'
+    tags: |
+     $(Release.ReleaseName)
+     latest
+	 
+variables:
+  bdoesshostauditingweb: 'bdoesshostauditingservices'
+
+steps:
+- task: Docker@2
+  displayName: buildAndPush
+  inputs:
+    containerRegistry: 'ESS Docker Registry'
+    repository: '$(bdoesshostauditingweb)'
+    Dockerfile: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/src/Bdo.Ess.Microservice.AuditCa.Web/Dockerfile'
+    buildContext: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/'
+    tags: |
+     $(Release.ReleaseName)
+     latest
+	 
+variables:
+  bdoessresourceweb: 'bdoessresourceservices'
+
+steps:
+- task: Docker@2
+  displayName: buildAndPush
+  inputs:
+    containerRegistry: 'ESS Docker Registry'
+    repository: '$(bdoessresourceweb)'
+    Dockerfile: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/src/Bdo.Ess.Microservice.Resource.Web/Dockerfile'
+    buildContext: '$(System.ArtifactsDirectory)/$(Release.PrimaryArtifactSourceAlias)/aspnet-core/'
+    tags: |
+     $(Release.ReleaseName)
+     latest
+	 

@@ -1,0 +1,38 @@
+steps:
+- task: AzureFileCopy@2
+  displayName: 'AzureBlob File Copy'
+  inputs:
+    SourcePath: '$(System.DefaultWorkingDirectory)/_ESS-Angular UI/drop'
+    azureSubscription: 'ESS DEV'
+    Destination: AzureBlob
+    storage: essdstgacdiag4vm
+    ContainerName: '$web'
+  enabled: false
+  
+steps:
+- task: AzureCLI@1
+  displayName: 'Azure CLI - Purge Storage'
+  inputs:
+    azureSubscription: 'ESS DEV'
+    scriptLocation: inlineScript
+    inlineScript: 'az storage blob delete-batch --account-name essdfrontend -s $web'
+	
+steps:
+- task: AzureFileCopy@2
+  displayName: 'AzureBlob File Copy - Dev Storage Account'
+  inputs:
+    SourcePath: '$(System.DefaultWorkingDirectory)/_ESS-Angular UI/drop'
+    azureSubscription: 'ESS DEV'
+    Destination: AzureBlob
+    storage: essdfrontend
+    ContainerName: '$web'
+	
+steps:
+- task: AzureCLI@1
+  displayName: 'Azure CLI  - Purge CDN endpoint'
+  inputs:
+    azureSubscription: 'ESS DEV'
+    scriptLocation: inlineScript
+    inlineScript: 'az cdn endpoint purge -g ServicesD -n essbbd --profile-name dev-frontend-essbb --content-paths /* '
+  enabled: false
+  

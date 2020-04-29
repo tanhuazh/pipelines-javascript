@@ -1,0 +1,56 @@
+variables:
+  namespace: 'bdoess'
+  imagePullSecret: '27284e61-da8a-41e2-a132-45436ba7eb75'
+
+steps:
+- task: KubernetesManifest@0
+  displayName: createSecret
+  inputs:
+    action: createSecret
+    kubernetesServiceConnection: 'ESS DEV Cluster'
+    namespace: '$(namespace)'
+    secretName: '$(imagePullSecret)'
+    dockerRegistryEndpoint: 'ESS Docker Registry'
+	
+variables:
+  namespace: 'bdoess'
+  bdoessportalsetup: 'bdoesshostsetup'
+
+steps:
+- task: KubernetesManifest@0
+  displayName: delete
+  inputs:
+    action: delete
+    kubernetesServiceConnection: 'ESS DEV Cluster'
+    namespace: '$(namespace)'
+    arguments: 'jobs/$(bdoessportalsetup) --ignore-not-found=true'
+	
+steps:
+- powershell: '(Get-Content $(System.DefaultWorkingDirectory)\_Ops\Yaml\bdoess-hostsetup.yml) -replace ''(image:\s*.*):latest'', ''${1}:$(Release.ReleaseName)'' | Out-File -FilePath $(System.DefaultWorkingDirectory)\_Ops\Yaml\bdoess-hostsetup.$(Release.ReleaseName).yml'
+  displayName: 'PowerShell Script'
+  
+variables:
+  namespace: 'bdoess'
+  imagePullSecret: '27284e61-da8a-41e2-a132-45436ba7eb75'
+
+steps:
+- task: KubernetesManifest@0
+  displayName: 'deploy configmap'
+  inputs:
+    kubernetesServiceConnection: 'ESS DEV Cluster'
+    namespace: '$(namespace)'
+    manifests: '$(System.DefaultWorkingDirectory)/_Ops/Yaml/bdoess-hostsetup-configmap.dev.yml'
+    imagePullSecrets: '$(imagePullSecret)'
+	
+variables:
+  namespace: 'bdoess'
+  imagePullSecret: '27284e61-da8a-41e2-a132-45436ba7eb75'
+
+steps:
+- task: KubernetesManifest@0
+  displayName: 'deploy service'
+  inputs:
+    kubernetesServiceConnection: 'ESS DEV Cluster'
+    namespace: '$(namespace)'
+    manifests: '$(System.DefaultWorkingDirectory)/_Ops/Yaml/bdoess-hostsetup.$(Release.ReleaseName).yml'
+    imagePullSecrets: '$(imagePullSecret)'

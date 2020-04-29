@@ -1,0 +1,78 @@
+steps:
+- task: Npm@1
+  displayName: 'npm install'
+  inputs:
+    workingDir: angular
+    verbose: false
+	
+steps:
+- task: Npm@1
+  displayName: 'npm build Dev'
+  inputs:
+    command: custom
+    workingDir: angular
+    verbose: false
+    customCommand: 'run publishDev'
+    publishRegistry: useFeed
+    publishFeed: '00711b36-4c8e-450e-900c-1d7bc76f728e'
+	
+steps:
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Pipeline Artifact - Dev'
+  inputs:
+    targetPath: angular/dist
+    artifact: drop
+	
+steps:
+- task: Npm@1
+  displayName: 'npm build Test'
+  inputs:
+    command: custom
+    workingDir: angular
+    verbose: false
+    customCommand: 'run publishTest'
+    publishRegistry: useFeed
+    publishFeed: '00711b36-4c8e-450e-900c-1d7bc76f728e'
+	
+steps:
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Pipeline Artifact - Test'
+  inputs:
+    targetPath: angular/dist
+    artifact: dropTest
+	
+steps:
+- task: Npm@1
+  displayName: 'npm build UAT'
+  inputs:
+    command: custom
+    workingDir: angular
+    verbose: false
+    customCommand: 'run publishUat'
+    publishRegistry: useFeed
+    publishFeed: '00711b36-4c8e-450e-900c-1d7bc76f728e'
+	
+steps:
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Pipeline Artifact - UAT'
+  inputs:
+    targetPath: angular/dist
+    artifact: dropUat
+	
+steps:
+- task: Npm@1
+  displayName: 'npm build Prod'
+  inputs:
+    command: custom
+    workingDir: angular
+    verbose: false
+    customCommand: 'run publishProd'
+    publishRegistry: useFeed
+    publishFeed: '00711b36-4c8e-450e-900c-1d7bc76f728e'
+	
+steps:
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Pipeline Artifact - Prod'
+  inputs:
+    targetPath: angular/dist
+    artifact: dropProd
